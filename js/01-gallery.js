@@ -48,7 +48,7 @@ instance.show(() => window.addEventListener("keydown", escape));
 function escape(ev) {
     const escapeKey = "Escape";
     if (ev.code === escapeKey) {
-        console.log(ev.key);
+        console.log(ev.code);
 instance.close();
     }
 };
