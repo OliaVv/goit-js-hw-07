@@ -19,16 +19,16 @@ import { galleryItems } from './gallery-items.js';
 const gallery = document.querySelector(".gallery");
 
 const galleryList = galleryItems.map(({preview, original, description}) => `
-<div class = "gallery__item">
-    <a class = "gallery__link" href = "${original}">
-        <img class = "gallery__image" 
+<div class="gallery__item">
+    <a class="gallery__link" href="${original}">
+        <img 
+            class="gallery__image" 
             src="${preview}"
             data-source="${original}"
             alt="${description}"
         />
     </a>
-</div>
-`).join("");
+</div>`).join("");
 
 //console.log(galleryList);
 
@@ -36,24 +36,21 @@ gallery.insertAdjacentHTML("beforeend", galleryList);
 
 gallery.addEventListener("click", imageClick);
 
-function imageClick(e) {
-    e.preventDefault;
-    if (!e.target.classlist.contains("gallery_image"))
+
+function imageClick(ev) {
+    ev.preventDefault();
+    const targetImg = ev.target.classList.contains('gallery__image');
+    if (!targetImg)
     {return};
-const instance = basicLightbox.create(`<img src="${e.target.dataset.source}">`);
-console.log(e.target.dataset.source);
-instance.show();
+    const instance = basicLightbox.create(`<img src="${ev.target.dataset.source}">`);
+//console.log(ev.target.dataset.source);
+instance.show(() => window.addEventListener("keydown", escape));
+function escape(ev) {
+    const escapeKey = "Escape";
+    if (ev.code === escapeKey) {
+        console.log(ev.key);
+instance.close();
+    }
+};
 }
-
-// window.addEventListener("keydown", escape);
-// function escape(e) {
-//     const escapeKey = "Escape";
-//     if (e.code === escapeKey) {
-// instance.close();
-//     }
-// }
-
-
-
-
 
