@@ -36,15 +36,20 @@ gallery.insertAdjacentHTML("beforeend", galleryList);
 
 gallery.addEventListener("click", imageClick);
 
+//const instance = basicLightbox.create(`<img src="${ev.target.dataset.source}">`), {}
+
 
 function imageClick(ev) {
     ev.preventDefault();
     const targetImg = ev.target.classList.contains('gallery__image');
     if (!targetImg)
     {return};
-    const instance = basicLightbox.create(`<img src="${ev.target.dataset.source}">`);
+    const instance = basicLightbox.create(`<img src="${ev.target.dataset.source}">`, {
+        onShow: (instance) => {window.addEventListener("keydown", escape)},
+        onClose: (instance) => {window.removeEventListener("keydown", escape)}
+    })
 //console.log(ev.target.dataset.source);
-instance.show(() => window.addEventListener("keydown", escape));
+instance.show();
 function escape(ev) {
     const escapeKey = "Escape";
     if (ev.code === escapeKey) {
